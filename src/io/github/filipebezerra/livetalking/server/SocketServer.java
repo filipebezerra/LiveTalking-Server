@@ -17,6 +17,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,8 @@ import com.google.common.collect.Maps;
  */
 @ServerEndpoint("/chat")
 public class SocketServer {
+
+	private static final Log logger = LogFactory.getLog(SocketServer.class);
 
 	/**
 	 * set to store all the live sessions
@@ -70,7 +74,8 @@ public class SocketServer {
 	@OnOpen
 	public void onOpen(Session session) {
 
-		System.out.println(session.getId() + " has opened a connection");
+		logger.debug(String.format("%s has opened a connection",
+				session.getId()));
 
 		Map<String, String> queryParams = getQueryMap(session.getQueryString());
 
@@ -117,7 +122,8 @@ public class SocketServer {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 
-		System.out.println("Message from " + session.getId() + ": " + message);
+		logger.debug(String.format("Message from %s: %s", session.getId(),
+				message));
 
 		String msg = null;
 
@@ -141,7 +147,7 @@ public class SocketServer {
 	@OnClose
 	public void onClose(Session session) {
 
-		System.out.println("Session " + session.getId() + " has ended");
+		logger.debug(String.format("Session %s has ended", session.getId()));
 
 		// Getting the client name that exited
 		String name = nameSessionPair.get(session.getId());
@@ -189,14 +195,13 @@ public class SocketServer {
 			}
 
 			try {
-				System.out.println("Sending Message To: " + sessionId + ", "
-						+ json);
+				logger.debug(String.format("Sending Message To: %s, %s", json,
+						sessionId, json));
 
 				s.getBasicRemote().sendText(json);
 			} catch (IOException e) {
-				System.out.println("error in sending. " + s.getId() + ", "
-						+ e.getMessage());
-				e.printStackTrace();
+				logger.error(String.format("error in sending. %s", s.getId()),
+						e);
 			}
 		}
 	}
