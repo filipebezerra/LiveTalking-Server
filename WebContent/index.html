@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Live Talking</title>
+
+        <link href="vendors/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700' rel='stylesheet' type='text/css'>
+        <link href="styles/style.css" type="text/css" rel='stylesheet'/>
+    </head>
+    <body>
+        <div class="body_container">
+
+            <div id="header">
+                <h1>Live Talking</h1>
+
+                <p class='online_count'>
+                    <b>23</b> people online right now
+                </p>
+            </div>
+
+            <div id="prompt_name_container" class="box_shadow">
+                <p>Enter your name</p>
+
+                <form id="form_submit" method="post">
+                    <input type="text" id="input_name"/> <input type="submit" value="JOIN" id="btn_join">
+                </form>
+            </div>
+
+            <div id="message_container" class="box_shadow">
+
+                <ul id="messages">
+                </ul>
+
+                <div id="input_message_container">
+                    <form id="form_send_message" method="post" action="#">
+                        <input type="text" id="input_message" placeholder="Type your message here..."/>
+                        <input type="submit" id="btn_send" onclick="send();" value="Send"/>
+
+                        <div class="clear"></div>
+                    </form>
+                </div>
+                <div>
+                    <input type="button" onclick="closeSocket();" value="Leave Chat Room" id="btn_close"/>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="vendors/js/jquery-1.11.1.min.js"></script>
+        <script src="vendors/js/bootstrap.min.js"></script>
+        <script src="scripts/main.js"></script>
+    </body>
+</html>
